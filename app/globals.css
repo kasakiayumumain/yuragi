@@ -12,6 +12,11 @@
   --color-ink: #2c2418;
   --color-ink-mid: #5a4e3a;
   --color-ink-muted: #8a7758;
+  --color-cat-books: #d4a574;
+  --color-cat-learn: #7b9ea8;
+  --color-cat-trip: #a8987b;
+  --color-cat-build: #8a9a7b;
+  --color-cat-think: #b08968;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-serif: var(--font-noto-serif-jp);
