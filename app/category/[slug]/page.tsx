@@ -3,7 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ArticleCard } from "@/components/home/ArticleCard";
 import { CATEGORIES_DATA } from "@/lib/categories";
-import { MOCK_ARTICLES } from "@/lib/mock-posts";
+import { getPostsByCategory } from "@/lib/posts";
 
 type Params = { slug: string };
 
@@ -20,7 +20,7 @@ export default async function CategoryPage({
   const category = CATEGORIES_DATA.find((c) => c.slug === slug);
   if (!category) notFound();
 
-  const articles = MOCK_ARTICLES.filter((a) => a.category === slug);
+  const articles = getPostsByCategory(slug);
 
   return (
     <div className="min-h-screen bg-ivory py-6 px-4">

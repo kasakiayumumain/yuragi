@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { compileMDX } from "next-mdx-remote/rsc";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ArticleHeader } from "@/components/article/ArticleHeader";
 import { ArticleBody } from "@/components/article/ArticleBody";
 import { CategoryLabel } from "@/components/common/CategoryLabel";
-import { MOCK_ARTICLES } from "@/lib/mock-posts";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
 
 type Params = { category: string; slug: string };
 
 export function generateStaticParams(): Params[] {
-  return MOCK_ARTICLES.map(({ category, slug }) => ({ category, slug }));
+  return getAllPosts().map(({ category, slug }) => ({ category, slug }));
 }
 
 export default async function ArticlePage({
@@ -19,18 +20,18 @@ export default async function ArticlePage({
   params: Promise<Params>;
 }) {
   const { category, slug } = await params;
-  const article = MOCK_ARTICLES.find(
-    (a) => a.category === category && a.slug === slug
-  );
-  if (!article) notFound();
+  const post = getPostBySlug(category, slug);
+  if (!post) notFound();
+
+  const { content } = await compileMDX({ source: post.content });
 
   return (
     <div className="min-h-screen bg-ivory py-6 px-4">
       <div className="max-w-2xl mx-auto bg-ivory-light border border-ink/10 rounded-sm overflow-hidden">
         <Header />
         <main>
-          <ArticleHeader article={article} />
-          <ArticleBody />
+          <ArticleHeader article={post.frontmatter} />
+          <ArticleBody>{content}</ArticleBody>
         </main>
         <div className="px-7 py-5 border-t border-ink/8">
           <Link

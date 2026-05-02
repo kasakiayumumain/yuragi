@@ -1,3 +1,5 @@
+import "./article-body.css";
+
 type Props = {
   children?: React.ReactNode;
 };
@@ -5,15 +7,13 @@ type Props = {
 export function ArticleBody({ children }: Props) {
   return (
     <div className="px-7 py-8 min-h-48">
-      <div
-        className="text-[14px] text-ink-mid leading-[2] font-sans"
-      >
-        {children ?? (
-          <p className="text-ink-muted text-center py-12 text-[13px] tracking-wide">
-            記事コンテンツはフェーズ5（MDX実装）で表示されます。
-          </p>
-        )}
-      </div>
+      {children ? (
+        <div className="article-body">{children}</div>
+      ) : (
+        <p className="text-ink-muted text-center py-12 text-[13px] tracking-wide font-sans">
+          記事コンテンツがありません。
+        </p>
+      )}
     </div>
   );
 }
